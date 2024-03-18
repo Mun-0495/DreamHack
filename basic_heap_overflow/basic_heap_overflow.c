@@ -30,9 +30,9 @@ void table_func() {
 }
 
 int main() {
-    char *ptr = malloc(0x20);
+    char *ptr = malloc(0x20); // 0x804b1a0
 
-    struct over *over = malloc(0x20);
+    struct over *over = malloc(0x20); // 0x8048694
 
     initialize();
 
@@ -40,10 +40,10 @@ int main() {
 
     scanf("%s", ptr);
 
-    if( !over->table ){
+    if(!over->table ){
         return 0;
     }
-
+    
     over->table();
     return 0;
 }
