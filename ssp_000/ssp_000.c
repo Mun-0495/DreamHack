@@ -2,16 +2,13 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
-#include <string.h>
 
-struct over {
-    void (*table)();
-};
 
 void alarm_handler() {
     puts("TIME OUT");
     exit(-1);
 }
+
 
 void initialize() {
     setvbuf(stdin, NULL, _IONBF, 0);
@@ -25,25 +22,22 @@ void get_shell() {
     system("/bin/sh");
 }
 
-void table_func() {
-    printf("overwrite_me!");
-}
-
-int main() {
-    char *ptr = malloc(0x20); // 0x804b1a0
-
-    struct over *over = malloc(0x20); // 0x8048694
+int main(int argc, char *argv[]) {
+    long addr;
+    long value;
+    char buf[0x40] = {};
 
     initialize();
 
-    over->table = table_func;
 
-    scanf("%s", ptr);
+    read(0, buf, 0x80);
 
-    if(!over->table ){
-        return 0;
-    }
-    
-    over->table();
+    printf("Addr : ");
+    scanf("%ld", &addr);
+    printf("Value : ");
+    scanf("%ld", &value);
+
+    *(long *)addr = value;
+
     return 0;
 }
